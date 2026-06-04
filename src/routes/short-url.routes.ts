@@ -11,4 +11,9 @@ router.post(
     controller.shortenUrl
 );
 
+router.get(
+    '/:shortCode',
+    controller.redirectLink
+)
+
 export default router;

@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import service from '../services/short-url.service';
 
+type RedirectParams = {
+    shortCode: string;
+};
+
 async function shortenUrl(req: Request, res: Response) {
     try {
         const { longUrl } = req.body;
@@ -17,6 +21,22 @@ async function shortenUrl(req: Request, res: Response) {
     }
 }
 
+async function redirectLink(req: Request<RedirectParams>, res: Response) {
+    try {
+        const shortCode = req.params.shortCode
+        const url = await service.redirectLink(shortCode)
+        res.redirect(url)
+    } catch (error) {
+         return res.status(400).json({
+            message: error instanceof Error
+                ? error.message
+                : 'Erro interno do servidor'
+        });
+    }
+}
+
+
 export default {
-    shortenUrl
+    shortenUrl,
+    redirectLink
 };

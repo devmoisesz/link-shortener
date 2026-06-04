@@ -11,6 +11,17 @@ async function shortenUrlService(longUrl: string) {
     return await model.create(shortCode, longUrl);
 }
 
+async function redirectLink(shortCode: string) {
+    const shortUrl = await model.findByShortCode(shortCode);
+
+    if(!shortUrl){
+        throw new Error('URL não encontrada');
+    }
+
+    return shortUrl.longUrl;
+}
+
 export default {
-    shortenUrlService
+    shortenUrlService,
+    redirectLink
 };
