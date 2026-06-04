@@ -12,8 +12,8 @@ async function shortenUrl(req: Request, res: Response) {
         const shortUrl = await service.shortenUrlService(longUrl);
 
         return res.status(201).json(shortUrl);
-    } catch (error) {
-        return res.status(400).json({
+    } catch (error: unknown) {
+        return res.status(500).json({
             message: error instanceof Error
                 ? error.message
                 : 'Erro interno do servidor'
@@ -26,8 +26,8 @@ async function redirectLink(req: Request<RedirectParams>, res: Response) {
         const shortCode = req.params.shortCode
         const url = await service.redirectLink(shortCode)
         res.redirect(url)
-    } catch (error) {
-         return res.status(400).json({
+    } catch (error: unknown) {
+         return res.status(500).json({
             message: error instanceof Error
                 ? error.message
                 : 'Erro interno do servidor'
