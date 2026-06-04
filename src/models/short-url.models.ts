@@ -26,6 +26,12 @@ async function create(shortCode: string, longUrl: string) {
     });
 }
 
+async function findByLongUrl(longUrl: string) {
+    return await ShortUrlSchema.findOne({
+        longUrl
+    })
+}
+
 async function exists(shortCode: string) {
     return await ShortUrlSchema.exists({
         shortCode
@@ -39,6 +45,7 @@ async function findByShortCode(shortCode: string) {
 }
 
 export default {
+    findByLongUrl,
     create,
     exists,
     findByShortCode

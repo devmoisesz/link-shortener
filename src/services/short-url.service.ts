@@ -2,6 +2,9 @@ import model from '../models/short-url.models';
 import { generateShortCode } from '../utils/generate.short-code';
 
 async function shortenUrlService(longUrl: string) {
+    const existing = await model.findByLongUrl(longUrl)
+    if(existing) return existing
+    
     let shortCode = generateShortCode();
 
     while (await model.exists(shortCode)) {
