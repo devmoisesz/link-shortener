@@ -1,12 +1,14 @@
 import express from 'express';
-import {validate} from '../validators/short-url.validator.ts'
-import { urlSchema } from '../schemas/short-url.schema.ts'
-import { shortenUrl } from '../controllers/short-url.controller.ts'
+import { validate } from '../validators/short-url.validator';
+import { urlSchema } from '../schemas/short-url.schema';
+import controller from "../controllers/short-url.controller";
 
 const router = express.Router();
 
 router.post(
-    '/shortener', 
-    validate(urlSchema)
-    shortenUrl
+    '/api/shorten', 
+    validate(urlSchema),
+    controller.shortenUrl
 );
+
+export default router;

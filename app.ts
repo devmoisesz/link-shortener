@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
-import { connectDatabase } from './config/database.ts';
-import shortUrlRoutes from './src/routes/short-url.routes.ts'
+import { connectDatabase } from './config/database';
+import shortUrlRoutes from './src/routes/short-url.routes'
 
 const app = express();
 
