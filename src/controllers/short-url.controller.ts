@@ -11,7 +11,12 @@ async function shortenUrl(req: Request, res: Response) {
 
         const shortUrl = await service.shortenUrlService(longUrl);
 
-        return res.status(201).json(shortUrl);
+        const baseUrl = `${req.protocol}://${req.get('host')}/shortener`
+
+        return res.status(201).json({
+            schotCode: shortUrl.shortCode,
+            shortUrl: `${baseUrl}/${shortUrl.shortCode}`
+        });
     } catch (error: unknown) {
         return res.status(500).json({
             message: error instanceof Error
