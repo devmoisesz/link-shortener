@@ -24,7 +24,25 @@ async function redirectLink(shortCode: string) {
     return shortUrl.longUrl;
 }
 
+async function getUserUrls(userId: string, page: number, limit: number) {
+    if (!userId) {
+        throw new Error('User not authenticated');
+    }
+
+    const [urls, total] = await Promise.all([
+        model.findByUserId(userId, page, limit),
+        model.countByUserId(userId)
+    ]);
+
+    return {
+        urls,
+        total
+    };
+}
+
+
 export default {
     shortenUrlService,
-    redirectLink
+    redirectLink,
+    getUserUrls
 };

@@ -8,7 +8,7 @@ type RedirectParams = {
 async function shortenUrl(req: Request, res: Response) {
     try {
         const { longUrl } = req.body;
-        const userId = req.user?.id
+        const userId = req.user!.id
 
         const shortUrl = await service.shortenUrlService(longUrl, userId);
 
@@ -46,8 +46,40 @@ async function redirectLink(req: Request<RedirectParams>, res: Response) {
     }
 }
 
+async function getUserUrls(req: Request, res: Response) {
+    try {
+        const userId = req.user!.id;
+
+        const page =
+            typeof req.query.page === 'string'
+                ? Number(req.query.page)
+                : 1;
+
+        const limit =
+            typeof req.query.limit === 'string'
+                ? Number(req.query.limit)
+                : 10;
+
+        if (Number.isNaN(page) || Number.isNaN(limit) || page < 1 || limit < 1) {
+            res.status(400).json({
+                message: 'Page and limit must be numbers greater than or equal to 1',
+            });
+            return;
+        }
+
+        const { urls, total } = await service.getUserUrls(userId, page, limit);
+
+        return res.status(200).json({urls, total, page, limit,});
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+        });
+    }
+}
+
 
 export default {
     shortenUrl,
-    redirectLink
+    redirectLink,
+    getUserUrls
 };

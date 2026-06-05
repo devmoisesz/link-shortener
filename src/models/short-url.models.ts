@@ -49,9 +49,28 @@ async function findByShortCode(shortCode: string) {
     });
 }
 
+async function findByUserId(
+    userId: string,
+    page: number,
+    limit: number
+) {
+    const skip = (page - 1) * limit;
+
+    return await ShortUrlSchema.find({ userId })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+}
+
+async function countByUserId(userId: string) {
+    return await ShortUrlSchema.countDocuments({ userId });
+}
+
 export default {
     findByLongUrl,
     create,
     exists,
-    findByShortCode
+    findByShortCode,
+    findByUserId,
+    countByUserId
 };

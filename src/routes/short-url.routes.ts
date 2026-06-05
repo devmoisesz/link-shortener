@@ -18,4 +18,10 @@ router.get(
     controller.redirectLink
 )
 
+router.get(
+    '/api/urls',
+    authentication,
+    controller.getUserUrls
+)
+
 export default router;
