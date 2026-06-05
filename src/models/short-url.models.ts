@@ -7,6 +7,10 @@ const shortUrlSchema = new Schema({
         unique: true,
         index: true
     },
+    userId: {
+        type: String,
+        required: true
+    },
     longUrl: {
         type: String,
         required: true
@@ -19,9 +23,10 @@ const shortUrlSchema = new Schema({
 
 const ShortUrlSchema = model('ShortUrl', shortUrlSchema);
 
-async function create(shortCode: string, longUrl: string) {
+async function create(shortCode: string, userId: string | undefined, longUrl: string) {
     return await ShortUrlSchema.create({
         shortCode,
+        userId,
         longUrl
     });
 }

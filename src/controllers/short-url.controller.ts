@@ -8,12 +8,14 @@ type RedirectParams = {
 async function shortenUrl(req: Request, res: Response) {
     try {
         const { longUrl } = req.body;
+        const userId = req.user?.id
 
-        const shortUrl = await service.shortenUrlService(longUrl);
+        const shortUrl = await service.shortenUrlService(longUrl, userId);
 
         const baseUrl = `${req.protocol}://${req.get('host')}/shortener`
 
         return res.status(201).json({
+            userId: shortUrl.userId,
             schortCode: shortUrl.shortCode,
             shortUrl: `${baseUrl}/${shortUrl.shortCode}`
         });
