@@ -1,0 +1,43 @@
+FRONTEND STRUCTURE
+==================
+
+/src
+  /@types
+    - auth.ts (tipos de autenticação)
+    - api.ts (tipos de API)
+  
+  /components (reutilizáveis)
+    - Input.tsx
+    - Button.tsx
+    - Card.tsx
+    - Toast.tsx
+    - UrlItem.tsx
+  
+  /context (estado global)
+    - AuthContext.tsx
+    - ToastContext.tsx (opcional)
+  
+  /hooks (custom hooks)
+    - useAuth.ts
+    - useLocalStorage.ts
+  
+  /pages (telas)
+    - Login.tsx
+    - Register.tsx
+    - Dashboard.tsx
+  
+  /services (API)
+    - api.ts (interceptador com refresh token)
+    - auth.ts (login, register, logout)
+    - shortUrl.ts (shorten, list, delete)
+  
+  /styles (CSS global)
+    - globals.css
+    - variables.css
+  
+  /utils (funções)
+    - validation.ts
+    - constants.ts
+  
+  App.tsx (router)
+  main.tsx (entry)
