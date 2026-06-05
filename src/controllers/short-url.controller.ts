@@ -14,7 +14,7 @@ async function shortenUrl(req: Request, res: Response) {
         const baseUrl = `${req.protocol}://${req.get('host')}/shortener`
 
         return res.status(201).json({
-            schotCode: shortUrl.shortCode,
+            schortCode: shortUrl.shortCode,
             shortUrl: `${baseUrl}/${shortUrl.shortCode}`
         });
     } catch (error: unknown) {
