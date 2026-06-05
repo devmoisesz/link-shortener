@@ -18,8 +18,10 @@ function authentication(req: Request, res: Response, next: NextFunction){
         req.user = decoded;
         next()
     } catch (error: unknown) {
-        throw new Error()
-    }
+    return res.status(401).json({
+        message: 'Token inválido ou expirado'
+    });
+}
 }
 
 export default authentication
