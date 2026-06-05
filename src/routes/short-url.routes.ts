@@ -2,11 +2,13 @@ import express from 'express';
 import { validate } from '../validators/short-url.validator';
 import { urlSchema } from '../schemas/schema';
 import controller from "../controllers/short-url.controller";
+import authentication from '../auth/auth';
 
 const router = express.Router();
 
 router.post(
     '/api/shorten', 
+    authentication,
     validate(urlSchema),
     controller.shortenUrl
 );
