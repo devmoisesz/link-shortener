@@ -18,12 +18,26 @@ async function login(email: string, password: string) {
     const validPassoword = await bcrypt.compare(password, user.password)
     if(!validPassoword) throw new Error('E-mail ou senha incorretos.')
 
-    const token = jwt.sign(
-        {id: user._id.toString},
+    const accessToken = jwt.sign(
+        {id: user._id},
         process.env.JWT_SECRET!,
         {expiresIn: '1d'}
     )
-    return { token }
+
+    const refreshToken = jwt.sign(
+        {id: user._id },
+        process.env.JWT_REFRESH_SECRET!,
+        { expiresIn: '7d' }
+    )
+    return { 
+        accessToken,
+        refreshToken,
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email
+        }
+     }
 }
 
 export default {
