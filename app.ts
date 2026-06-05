@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import { connectDatabase } from './config/database';
 import shortUrlRoutes from './src/routes/short-url.routes'
 import rateLimit from 'express-rate-limit'
@@ -12,9 +13,14 @@ const limiter = rateLimit({
 
 const app = express();
 
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
+
 app.use(express.json());
 
-app.use('/shortener', shortUrlRoutes, limiter)
+app.use('/shortener', limiter, shortUrlRoutes)
 
 connectDatabase();
 
