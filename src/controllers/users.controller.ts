@@ -31,7 +31,31 @@ async function login(req: Request, res: Response) {
     }
 }
 
+async function refresh(req: Request, res: Response) {
+    try {
+        const { refreshToken } = req.body
+        if (!refreshToken) {
+            return res.status(400).json({
+                message: 'Refresh token é obrigatório'
+            });
+        }
+
+        const { accessToken } = await service.refreshAccessToken(refreshToken);
+        return res.status(200).json({ accessToken });
+    } catch (error: unknown) {
+        if (error instanceof Error && error.message.includes('inválido')) {
+            return res.status(401).json({
+                message: 'Refresh token inválido ou expirado. Faça login novamente.'
+            });
+        }
+        return res.status(500).json({
+            message: 'Erro interno do servidor'
+        });
+    }
+}
+
 export default{
     registerUser,
-    login
+    login,
+    refresh
 }

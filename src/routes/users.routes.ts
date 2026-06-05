@@ -18,5 +18,9 @@ router.post(
     controller.login
 )
 
+router.post(
+    '/refresh',
+    controller.refresh
+)
 
 export default router

@@ -40,7 +40,27 @@ async function login(email: string, password: string) {
      }
 }
 
+async function refreshAccessToken(refreshToken: string) {
+    try {
+        const decoded = jwt.verify(
+            refreshToken,
+            process.env.JWT_REFRESH_SECRET!
+        ) as { id: string };
+
+        const accessToken = jwt.sign(
+            { id: decoded.id },
+            process.env.JWT_SECRET!,
+            { expiresIn: '1d' }
+        );
+
+        return { accessToken };
+    } catch (error) {
+        throw new Error('Refresh token inválido ou expirado');
+    }
+}
+
 export default {
     registerUser,
-    login
+    login,
+    refreshAccessToken
 }
