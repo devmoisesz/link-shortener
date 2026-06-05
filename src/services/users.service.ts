@@ -19,7 +19,7 @@ async function login(email: string, password: string) {
     if(!validPassoword) throw new Error('E-mail ou senha incorretos.')
 
     const token = jwt.sign(
-        {id: user.id},
+        {id: user._id.toString},
         process.env.JWT_SECRET!,
         {expiresIn: '1d'}
     )
