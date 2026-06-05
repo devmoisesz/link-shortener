@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { connectDatabase } from './config/database';
 import shortUrlRoutes from './src/routes/short-url.routes'
+import usersRoutes from './src/routes/users.routes'
 import rateLimit from 'express-rate-limit'
 
 const limiter = rateLimit({
@@ -21,6 +22,8 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/shortener', limiter, shortUrlRoutes)
+
+app.use('/users', limiter, usersRoutes)
 
 connectDatabase();
 

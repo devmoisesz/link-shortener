@@ -1,6 +1,6 @@
 import express from 'express';
 import { validate } from '../validators/short-url.validator';
-import { urlSchema } from '../schemas/short-url.schema';
+import { urlSchema } from '../schemas/schema';
 import controller from "../controllers/short-url.controller";
 
 const router = express.Router();
