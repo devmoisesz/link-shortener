@@ -1,4 +1,4 @@
-import { email, z } from 'zod'
+import { z } from 'zod'
 
 export const urlSchema = z.object({
     longUrl: z
@@ -12,6 +12,16 @@ export const userSchema = z.object({
         .string()
         .min(3)
         .max(100),
+    email: z
+        .email()
+        .toLowerCase(),
+    password: z
+        .string()
+        .min(6)
+        .max(50)
+})
+
+export const loginSchema = z.object({
     email: z
         .email()
         .toLowerCase(),

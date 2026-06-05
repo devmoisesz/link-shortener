@@ -16,6 +16,22 @@ async function registerUser(req: Request, res: Response) {
     }
 }
 
+async function login(req: Request, res: Response) {
+    try {
+        const { email, password } = req.body
+        const token = await service.login(email, password)
+        return res.status(200).json(token)
+    } catch (error) {
+        if (error instanceof Error && error.message === 'E-mail ou senha incorretos.'){
+            return res.status(400).json({message: 'E-mail ou senha incorretos.'})
+        }
+         return res.status(500).json({
+            message: 'Erro interno do servidor'
+        });
+    }
+}
+
 export default{
-    registerUser
+    registerUser,
+    login
 }
