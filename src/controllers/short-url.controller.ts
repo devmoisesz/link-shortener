@@ -70,16 +70,48 @@ async function getUserUrls(req: Request, res: Response) {
         const { urls, total } = await service.getUserUrls(userId, page, limit);
 
         return res.status(200).json({urls, total, page, limit,});
-    } catch (error) {
+    } catch (error: unknown) {
         res.status(500).json({
             message: 'Internal server error',
         });
     }
 }
 
+async function DeleteUrl(req: Request<RedirectParams>, res: Response) {
+    try {
+        const shortCode = req.params.shortCode;
+        const userId = req.user!.id;
+
+        await service.deleteUserUrl(shortCode, userId); 
+        
+        return res.status(200).json({ 
+            message: 'URL deletada com sucesso' 
+        });
+    } catch (error: unknown) {
+        if (error instanceof Error) 
+             { if (error.message === 'URL não encontrada') { 
+                return res.status(404).json({ 
+                    message: 'URL não encontrada' 
+                }); 
+            }
+            
+            if (error.message === 'permissão') { 
+                return res.status(403).json({ 
+                    message: 'Você não tem permissão para deletar esta URL' 
+                }); 
+            } 
+        }
+        
+        return res.status(500).json({ 
+            message: 'Internal server error' 
+        });
+     }
+}
+
 
 export default {
     shortenUrl,
     redirectLink,
-    getUserUrls
+    getUserUrls,
+    DeleteUrl
 };

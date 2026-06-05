@@ -66,11 +66,18 @@ async function countByUserId(userId: string) {
     return await ShortUrlSchema.countDocuments({ userId });
 }
 
+async function deleteByShortCode(shortCode: string) {
+    const result = await ShortUrlSchema.deleteOne({ shortCode });
+
+    return result.deletedCount > 0;
+}
+
 export default {
     findByLongUrl,
     create,
     exists,
     findByShortCode,
     findByUserId,
-    countByUserId
+    countByUserId,
+    deleteByShortCode
 };

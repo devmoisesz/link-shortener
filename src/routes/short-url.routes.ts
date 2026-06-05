@@ -24,4 +24,10 @@ router.get(
     controller.getUserUrls
 )
 
+router.delete(
+    `/api/:shortCode`,
+    authentication,
+    controller.DeleteUrl
+)
+
 export default router;

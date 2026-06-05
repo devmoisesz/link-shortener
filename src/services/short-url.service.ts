@@ -40,9 +40,24 @@ async function getUserUrls(userId: string, page: number, limit: number) {
     };
 }
 
+async function deleteUserUrl(shortCode: string, userId: string) {
+    const url = await model.findByShortCode(shortCode);
+
+    if (!url) {
+        throw new Error('URL não encontrada');
+    }
+
+    if (url.userId.toString() !== userId) {
+        throw new Error('permissão');
+    }   
+
+    await model.deleteByShortCode(shortCode);
+}
+
 
 export default {
     shortenUrlService,
     redirectLink,
-    getUserUrls
+    getUserUrls,
+    deleteUserUrl
 };
