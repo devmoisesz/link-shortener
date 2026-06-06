@@ -42,9 +42,11 @@ export interface GetUrlsResponse {
 }
 
 export interface ShortenUrlResponse {
-  shortCode: string;
-  longUrl: string;
-  createdAt: string;
+  shortCode?: string;
+  schortCode?: string;
+  shortUrl?: string;
+  longUrl?: string;
+  createdAt?: string;
   userId: string;
 }
 

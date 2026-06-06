@@ -16,7 +16,7 @@ import type {
 } from '../@types/auth';
 import { Buttuon } from '../components/Buttuon';
 import { Input } from '../components/Input';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { apiCall } from '../service/api';
 import { API_URL, DEFAULT_PAGE_LIMIT, ENDPOINTS } from '../utils/constants';
 
@@ -66,6 +66,16 @@ const formatDate = (date: string): string =>
 
 const truncateUrl = (url: string, maxLength = 80): string =>
   url.length > maxLength ? `${url.slice(0, maxLength)}...` : url;
+
+const getShortenResultUrl = (result: ShortenUrlResponse): string | null => {
+  if (result.shortUrl) {
+    return result.shortUrl;
+  }
+
+  const shortCode = result.shortCode || result.schortCode;
+
+  return shortCode ? `${shortUrlBase}/${shortCode}` : null;
+};
 
 const styles = {
   page: {
@@ -331,7 +341,13 @@ export function Dashboard() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      void loadUrls(page);
+      const timeoutId = window.setTimeout(() => {
+        void loadUrls(page);
+      }, 0);
+
+      return () => {
+        window.clearTimeout(timeoutId);
+      };
     }
   }, [isAuthenticated, loadUrls, page]);
 
@@ -409,6 +425,10 @@ export function Dashboard() {
     setLongUrl('');
   };
 
+  const createdShortUrl = shortenResult
+    ? getShortenResultUrl(shortenResult)
+    : null;
+
   if (isAuthLoading) {
     return (
       <main style={styles.page}>
@@ -476,23 +496,21 @@ export function Dashboard() {
             )}
           </form>
 
-          {shortenResult && (
+          {shortenResult && createdShortUrl && (
             <div style={styles.result}>
               <p style={styles.muted}>Link criado para {user?.name || 'você'}:</p>
               <div style={styles.resultRow}>
                 <a
-                  href={getShortUrl(shortenResult.shortCode)}
+                  href={createdShortUrl}
                   target="_blank"
                   rel="noreferrer"
                   style={styles.shortLink}
                 >
-                  {getShortUrl(shortenResult.shortCode)}
+                  {createdShortUrl}
                 </a>
                 <Buttuon
                   variant="primary"
-                  onClick={() =>
-                    copyToClipboard(getShortUrl(shortenResult.shortCode))
-                  }
+                  onClick={() => copyToClipboard(createdShortUrl)}
                 >
                   Copiar
                 </Buttuon>

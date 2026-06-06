@@ -1,7 +1,5 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -10,27 +8,11 @@ import {
 import type { ApiError, ApiResponse, LoginResponse, User } from '../@types/auth';
 import { apiCall } from '../service/api';
 import { ENDPOINTS, STORAGE_KEYS } from '../utils/constants';
-
-interface AuthContextType {
-  user: User | null;
-  isLoading: boolean;
-  isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (
-    name: string,
-    email: string,
-    password: string,
-    confirmPassword: string,
-  ) => Promise<void>;
-  logout: () => void;
-  error: string | null;
-}
+import { AuthContext, type AuthContextType } from './auth-context';
 
 interface AuthProviderProps {
   children: ReactNode;
 }
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const getStorageItem = (key: string): string | null => {
   try {
@@ -70,6 +52,21 @@ const parseStoredUser = (storedUser: string | null): User | null => {
   }
 };
 
+const getInitialUser = (): User | null => {
+  const accessToken = getStorageItem(STORAGE_KEYS.ACCESS_TOKEN);
+  const storedUser = parseStoredUser(getStorageItem(STORAGE_KEYS.USER));
+
+  if (accessToken && storedUser) {
+    return storedUser;
+  }
+
+  if (!accessToken) {
+    removeAuthStorage();
+  }
+
+  return null;
+};
+
 const parseLoginResponse = async (response: Response): Promise<LoginResponse> => {
   const payload = (await response.json()) as
     | LoginResponse
@@ -96,8 +93,8 @@ const getErrorMessage = async (
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(() => getInitialUser());
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const logout = useCallback(() => {
@@ -105,19 +102,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser(null);
     setError(null);
     window.location.href = '/login';
-  }, []);
-
-  useEffect(() => {
-    const accessToken = getStorageItem(STORAGE_KEYS.ACCESS_TOKEN);
-    const storedUser = parseStoredUser(getStorageItem(STORAGE_KEYS.USER));
-
-    if (accessToken && storedUser) {
-      setUser(storedUser);
-    } else if (!accessToken) {
-      removeAuthStorage();
-    }
-
-    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -230,14 +214,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth(): AuthContextType {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider.');
-  }
-
-  return context;
 }
