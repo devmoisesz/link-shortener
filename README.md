@@ -275,14 +275,18 @@ VITE_FRONTEND_URL=http://localhost:5173
 
 ### 📌 Endpoints da API
 
-POST   /users/register     # Registrar novo usuário
-POST   /users/login        # Fazer login
-POST   /users/refresh      # Renovar access token
+#### Autenticação
 
-**URLs Encurtadas (Requer Auth)**
+- `POST /users/register` — cadastrar usuário
+- `POST /users/login` — realizar login
+- `POST /users/refresh` — renovar o access token
 
-POST   /shortener/api/shorten      # Encurtar URL
-GET    /shortener/api/urls         # Listar URLs com paginação
-DELETE /shortener/api/:shortCode   # Deletar URL
+#### Gerenciamento de URLs
 
-GET    /shortener/:shortCode       # Redirecionar (público)
+- `POST /shortener/api/shorten` — encurtar uma URL
+- `GET /shortener/api/urls` — listar URLs do usuário com paginação
+- `DELETE /shortener/api/:shortCode` — excluir uma URL encurtada
+
+#### Redirecionamento
+
+- `GET /shortener/:shortCode` — redirecionar para a URL original (endpoint público)
