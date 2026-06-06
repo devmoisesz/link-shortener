@@ -14,7 +14,7 @@ import type {
   ShortenUrlResponse,
   ShortUrl,
 } from '../@types/auth';
-import { Buttuon } from '../components/Buttuon';
+import { Buttuon } from '../components/Button';
 import { Input } from '../components/Input';
 import { useAuth } from '../hooks/useAuth';
 import { apiCall } from '../service/api';
