@@ -77,26 +77,47 @@ Reunindo tudo:
 
 ## 🎨 Interface da Aplicação
 
+### Tela de Cadastro
+![Register Screen](img/tela-cadastro.png)
+
+A tela de cadastro foi desenvolvida com foco em uma experiência moderna e intuitiva, apresentando:
+
+- Card centralizado com design minimalista
+- Fundo com gradiente suave em tons de roxo
+- Validação em tempo real para nome, e-mail e senha
+- Indicador visual de força da senha
+- Feedback imediato para confirmação de senha
+- Botão de cadastro com gradiente roxo (#7C3AED) e estados visuais
+- Interface responsiva inspirada em Vercel e Linear
+- Navegação simplificada através do link para login
+
 ### Tela de Login
 ![Login Screen](img/tela-login.png)
 
 A interface de login apresenta um design minimalista inspirado em Vercel, com:
-- Card centralizado com sombra sutil
-- Gradiente suave de fundo
-- Validação em tempo real de email
-- Botão roxo (#7C3AED) com estados visuais
-- Link para registro para novos usuários
+
+- Card centralizado com bordas arredondadas e sombra sutil
+- Gradiente suave de fundo em tons de lilás
+- Tipografia elegante para reforçar a identidade visual da aplicação
+- Campos de email e senha com design limpo e moderno
+- Botão principal com gradiente roxo e estados visuais de interação
+- Layout responsivo para diferentes tamanhos de tela
+- Link para criação de conta para novos usuários
 
 ### Tela Principal (Dashboard)
 ![Dashboard Screen](img/tela-dashboard.png)
 
-Dashboard completo com:
-- Header com título centralizado e botão de logout
-- Seção de encurtamento de URL com validação
-- Resultado com link encurtado copiável
-- Lista de URLs do usuário com paginação
-- Ações de copiar e deletar para cada URL
-- Timestamps de criação formatados
+A interface principal foi desenvolvida com foco em simplicidade e produtividade, apresentando:
+
+- Header superior com identidade visual da aplicação e opção de logout
+- Área dedicada para encurtamento de URLs com feedback imediato após a criação do link
+- Botão para copiar o link gerado com um único clique
+- Seção de histórico com listagem das URLs encurtadas do usuário
+- Paginação para navegação entre os links cadastrados
+- Ações rápidas para copiar ou excluir links existentes
+- Cards organizados com espaçamento consistente e sombras suaves
+- Fundo com gradiente discreto em tons de lilás, inspirado em aplicações SaaS modernas
+- Interface responsiva inspirada em Vercel e Linear
 
 ---
 
@@ -254,14 +275,18 @@ VITE_FRONTEND_URL=http://localhost:5173
 
 ### 📌 Endpoints da API
 
-POST   /users/register     # Registrar novo usuário
-POST   /users/login        # Fazer login
-POST   /users/refresh      # Renovar access token
+#### Autenticação
 
-**URLs Encurtadas (Requer Auth)**
+- `POST /users/register` — cadastrar usuário
+- `POST /users/login` — realizar login
+- `POST /users/refresh` — renovar o access token
 
-POST   /shortener/api/shorten      # Encurtar URL
-GET    /shortener/api/urls         # Listar URLs com paginação
-DELETE /shortener/api/:shortCode   # Deletar URL
+#### Gerenciamento de URLs
 
-GET    /shortener/:shortCode       # Redirecionar (público)
+- `POST /shortener/api/shorten` — encurtar uma URL
+- `GET /shortener/api/urls` — listar URLs do usuário com paginação
+- `DELETE /shortener/api/:shortCode` — excluir uma URL encurtada
+
+#### Redirecionamento
+
+- `GET /shortener/:shortCode` — redirecionar para a URL original (endpoint público)
