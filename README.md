@@ -78,7 +78,7 @@ Reunindo tudo:
 ## 🎨 Interface da Aplicação
 
 ### Tela de Login
-![Login Screen](tela-login.png)
+![Login Screen](img/tela-login.png)
 
 A interface de login apresenta um design minimalista inspirado em Vercel, com:
 - Card centralizado com sombra sutil
@@ -88,7 +88,7 @@ A interface de login apresenta um design minimalista inspirado em Vercel, com:
 - Link para registro para novos usuários
 
 ### Tela Principal (Dashboard)
-![Dashboard Screen](tela-dashboard.png)
+![Dashboard Screen](img/tela-dashboard.png)
 
 Dashboard completo com:
 - Header com título centralizado e botão de logout
