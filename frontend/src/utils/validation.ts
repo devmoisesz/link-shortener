@@ -11,11 +11,16 @@ export const validateUrl = (url: string): boolean => {
   }
 };
 
-export const validateRequired = (value: string): boolean =>
-  value.trim().length > 0;
+export const validatePassword = (password: string): boolean =>
+  password.length >= 6;
 
-export const validateMinLength = (value: string, minLength: number): boolean =>
-  value.trim().length >= minLength;
+export const validateName = (name: string): boolean => {
+  const trimmedName = name.trim();
 
-export const validateMaxLength = (value: string, maxLength: number): boolean =>
-  value.length <= maxLength;
+  return trimmedName.length >= 3 && trimmedName.length <= 100;
+};
+
+export const matchPasswords = (
+  password: string,
+  confirmPassword: string,
+): boolean => password === confirmPassword;
