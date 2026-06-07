@@ -4,9 +4,9 @@
     "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "types": ["node"]
+    "skipLibCheck": true,
+    "types": ["node"],
+    "outDir": "./dist"
   },
-  "include": ["src"]
+  "include": ["**/*.ts"]
 }

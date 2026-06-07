@@ -25,8 +25,4 @@ app.use('/shortener', limiter, shortUrlRoutes)
 
 app.use('/users', limiter, usersRoutes)
 
-connectDatabase();
-
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor rodando na porta ${process.env.PORT}`);
-});
+export default app
