@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx app.ts"
+    "test": "vitest",
+    "test:run": "vitest run",
+    "dev": "tsx start.ts"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +29,10 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^25.9.2",
-    "tsx": "^4.22.4"
+    "supertest": "^7.2.2",
+    "tsx": "^4.22.4",
+    "vitest": "^4.1.8"
   }
 }
