@@ -1,11 +1,11 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import service from '../services/short-url.service';
 
 type RedirectParams = {
     shortCode: string;
 };
 
-async function shortenUrl(req: Request, res: Response) {
+async function shortenUrl(req: Request, res: Response, next: NextFunction) {
     try {
         const { longUrl } = req.body;
         const userId = req.user!.id
@@ -20,33 +20,21 @@ async function shortenUrl(req: Request, res: Response) {
             shortUrl: `${baseUrl}/${shortUrl.shortCode}`
         });
     } catch (error: unknown) {
-        return res.status(500).json({
-            message: error instanceof Error
-                ? error.message
-                : 'Erro interno do servidor'
-        });
+        next(error)
     }
 }
 
-async function redirectLink(req: Request<RedirectParams>, res: Response) {
+async function redirectLink(req: Request<RedirectParams>, res: Response, next: NextFunction) {
     try {
         const shortCode = req.params.shortCode;
         const url = await service.redirectLink(shortCode);
         res.redirect(url);
     } catch (error: unknown) {
-        if (error instanceof Error && error.message === 'URL não encontrada') {
-            return res.status(404).json({
-                message: 'URL encurtada não encontrada',
-                shortCode: req.params.shortCode
-            });
-        }
-        return res.status(500).json({
-            message: 'Erro interno do servidor'
-        });
+        next(error)
     }
 }
 
-async function getUserUrls(req: Request, res: Response) {
+async function getUserUrls(req: Request, res: Response, next: NextFunction) {
     try {
         const userId = req.user!.id;
 
@@ -71,13 +59,11 @@ async function getUserUrls(req: Request, res: Response) {
 
         return res.status(200).json({urls, total, page, limit,});
     } catch (error: unknown) {
-        res.status(500).json({
-            message: 'Internal server error',
-        });
+        next(error)
     }
 }
 
-async function DeleteUrl(req: Request<RedirectParams>, res: Response) {
+async function DeleteUrl(req: Request<RedirectParams>, res: Response, next: NextFunction) {
     try {
         const shortCode = req.params.shortCode;
         const userId = req.user!.id;
@@ -88,24 +74,8 @@ async function DeleteUrl(req: Request<RedirectParams>, res: Response) {
             message: 'URL deletada com sucesso' 
         });
     } catch (error: unknown) {
-        if (error instanceof Error) 
-             { if (error.message === 'URL não encontrada') { 
-                return res.status(404).json({ 
-                    message: 'URL não encontrada' 
-                }); 
-            }
-            
-            if (error.message === 'permissão') { 
-                return res.status(403).json({ 
-                    message: 'Você não tem permissão para deletar esta URL' 
-                }); 
-            } 
-        }
-        
-        return res.status(500).json({ 
-            message: 'Internal server error' 
-        });
-     }
+        next(error)
+    }
 }
 
 

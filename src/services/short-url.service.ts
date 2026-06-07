@@ -1,3 +1,4 @@
+import { AppError } from '../middleware/AppError';
 import model from '../models/short-url.models';
 import { generateShortCode } from '../utils/generate.short-code';
 
@@ -18,7 +19,7 @@ async function redirectLink(shortCode: string) {
     const shortUrl = await model.findByShortCode(shortCode);
 
     if(!shortUrl){
-        throw new Error('URL não encontrada');
+        throw new AppError('URL não encontrada', 404);
     }
 
     return shortUrl.longUrl;
@@ -26,7 +27,7 @@ async function redirectLink(shortCode: string) {
 
 async function getUserUrls(userId: string, page: number, limit: number) {
     if (!userId) {
-        throw new Error('User not authenticated');
+        throw new AppError('Usuário não autenticado!', 401);
     }
 
     const [urls, total] = await Promise.all([
@@ -44,11 +45,11 @@ async function deleteUserUrl(shortCode: string, userId: string) {
     const url = await model.findByShortCode(shortCode);
 
     if (!url) {
-        throw new Error('URL não encontrada');
+        throw new AppError('URL não encontrada', 404);
     }
 
     if (url.userId.toString() !== userId) {
-        throw new Error('permissão');
+        throw new AppError('Sem permissão para deletar esta URL', 401);
     }   
 
     await model.deleteByShortCode(shortCode);

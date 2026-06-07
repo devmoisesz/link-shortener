@@ -1,10 +1,11 @@
 import model from '../models/users.models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
+import { AppError } from '../middleware/AppError';
 
 async function registerUser(name: string, email: string, password: string) {
     const checkEmail = await model.findByEmail(email)
-    if(checkEmail) throw new Error('Email já cadastrado')
+    if(checkEmail) throw new AppError('Email já cadastrado', 422)
     
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -13,10 +14,10 @@ async function registerUser(name: string, email: string, password: string) {
 
 async function login(email: string, password: string) {
     const user = await model.findByEmail(email)
-    if(!user) throw new Error('E-mail ou senha incorretos.')
+    if(!user) throw new AppError('E-mail ou senha incorretos.', 400)
     
     const validPassoword = await bcrypt.compare(password, user.password)
-    if(!validPassoword) throw new Error('E-mail ou senha incorretos.')
+    if(!validPassoword) throw new AppError('E-mail ou senha incorretos.', 400)
 
     const accessToken = jwt.sign(
         {id: user._id},
@@ -42,6 +43,8 @@ async function login(email: string, password: string) {
 
 async function refreshAccessToken(refreshToken: string) {
     try {
+        if (!refreshToken) throw new AppError('Refresh token é obrigatório', 400)
+
         const decoded = jwt.verify(
             refreshToken,
             process.env.JWT_REFRESH_SECRET!
@@ -55,7 +58,7 @@ async function refreshAccessToken(refreshToken: string) {
 
         return { accessToken };
     } catch (error) {
-        throw new Error('Refresh token inválido ou expirado');
+        throw new AppError('Refresh token inválido ou expirado', 400);
     }
 }
 
