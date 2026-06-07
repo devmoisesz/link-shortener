@@ -1,5 +1,5 @@
 import express from 'express';
-import { validate } from '../validators/short-url.validator';
+import { validate } from '../validators/validator';
 import { urlSchema } from '../schemas/schema';
 import controller from "../controllers/short-url.controller";
 import authentication from '../auth/auth';

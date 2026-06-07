@@ -1,6 +1,6 @@
 import express from 'express';
 import { userSchema, loginSchema } from '../schemas/schema';
-import { validate } from '../validators/short-url.validator';
+import { validate } from '../validators/validator';
 import controller from '../controllers/users.controller'
 
 

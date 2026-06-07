@@ -1,26 +1,21 @@
 import dns from 'node:dns';
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import { config } from './index';
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 export async function connectDatabase(): Promise<void> {
-    try {
-        const mongoUri =
-            process.env.NODE_ENV === 'test'
-                ? process.env.MONGO_URI_TEST
-                : process.env.MONGO_URI_DEV;
+  try {
+    await mongoose.connect(config.db.url);
 
-        await mongoose.connect(mongoUri!);
-
-        console.log(
-            process.env.NODE_ENV === 'test'
-                ? 'Conectado ao Banco de Testes'
-                : 'Conectado ao Banco de Desenvolvimento'
-        );
-    } catch (error) {
-        console.error('Erro ao conectar ao MongoDB:', error);
-
-        process.exit(1);
-    }
+    console.log(
+      config.env === "test"
+        ? "Conectado ao Banco de Testes"
+        : "Conectado ao Banco de Desenvolvimento"
+    );
+  } catch (error) {
+    console.error("Erro ao conectar ao MongoDB:", error);
+    process.exit(1);
+  }
 }

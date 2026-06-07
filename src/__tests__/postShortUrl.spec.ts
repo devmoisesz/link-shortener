@@ -4,8 +4,9 @@ import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import 'dotenv/config';
 import { connectDatabase } from "../../config/database";
 import mongoose from "mongoose";
+import { config } from "../../config";
 
-const token = process.env.TOKEN_TESTING
+const token = config.test.token
 
 describe('POST /shortener/api/shorten', () => {
     beforeAll (async() => {

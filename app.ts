@@ -1,10 +1,11 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { connectDatabase } from './config/database';
 import shortUrlRoutes from './src/routes/short-url.routes'
 import usersRoutes from './src/routes/users.routes'
 import rateLimit from 'express-rate-limit'
+import { config } from './config';
+
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
@@ -15,7 +16,7 @@ const limiter = rateLimit({
 const app = express();
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: config.cors.origin,
   credentials: true
 }));
 

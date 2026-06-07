@@ -2,6 +2,7 @@ import model from '../models/users.models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
 import { AppError } from '../middleware/AppError';
+import { config } from '../../config';
 
 async function registerUser(name: string, email: string, password: string) {
     const checkEmail = await model.findByEmail(email)
@@ -21,13 +22,13 @@ async function login(email: string, password: string) {
 
     const accessToken = jwt.sign(
         {id: user._id},
-        process.env.JWT_SECRET!,
+        config.jwt.secret,
         {expiresIn: '1d'}
     )
 
     const refreshToken = jwt.sign(
         {id: user._id },
-        process.env.JWT_REFRESH_SECRET!,
+        config.jwt.refreshSecret,
         { expiresIn: '7d' }
     )
     return { 
@@ -47,12 +48,12 @@ async function refreshAccessToken(refreshToken: string) {
 
         const decoded = jwt.verify(
             refreshToken,
-            process.env.JWT_REFRESH_SECRET!
+            config.jwt.refreshSecret
         ) as { id: string };
 
         const accessToken = jwt.sign(
             { id: decoded.id },
-            process.env.JWT_SECRET!,
+            config.jwt.secret,
             { expiresIn: '1d' }
         );
 

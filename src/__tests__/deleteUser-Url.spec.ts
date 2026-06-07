@@ -4,8 +4,9 @@ import req from 'supertest'
 import { connectDatabase } from "../../config/database";
 import mongoose from "mongoose";
 import 'dotenv/config'
+import { config } from "../../config";
 
-const token = process.env.TOKEN_TESTING
+const token = config.test.token
 
 describe('DELETE /shotener/api/:shortCode', () => {
     beforeAll(async()=>{
