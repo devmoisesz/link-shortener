@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 describe('POST /users/login', () => {
     beforeAll (async() => {
-        connectDatabase()
+        await connectDatabase()
     })
     it('deve retornar status code 400', async () => {
         const res = await req(app)
@@ -19,6 +19,6 @@ describe('POST /users/login', () => {
             expect(res.status).toBe(400)
     })
     afterAll(async() => {
-        mongoose.disconnect()
+        await mongoose.disconnect()
     })
 })

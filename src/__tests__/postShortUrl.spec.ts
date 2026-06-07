@@ -9,7 +9,7 @@ const token = process.env.TOKEN_TESTING
 
 describe('POST /shortener/api/shorten', () => {
     beforeAll (async() => {
-        connectDatabase()
+        await connectDatabase()
     })
     it('deve retornar link encurtado', async () => {
         const res = await req(app)
@@ -22,6 +22,6 @@ describe('POST /shortener/api/shorten', () => {
         expect(res.status).toBe(201)
     });
     afterAll(async() => {
-        mongoose.disconnect()
+        await mongoose.disconnect()
     })
 });
