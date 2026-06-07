@@ -5,12 +5,22 @@ import dotenv from 'dotenv/config';
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 export async function connectDatabase(): Promise<void> {
-  try {
-    await mongoose.connect(process.env.MONGO_URI!);
+    try {
+        const mongoUri =
+            process.env.NODE_ENV === 'test'
+                ? process.env.MONGO_URI_TEST
+                : process.env.MONGO_URI_DEV;
 
-  } catch (error) {
-    console.error('Erro ao conectar ao MongoDB:', error);
+        await mongoose.connect(mongoUri!);
 
-    process.exit(1);
-  }
+        console.log(
+            process.env.NODE_ENV === 'test'
+                ? 'Conectado ao Banco de Testes'
+                : 'Conectado ao Banco de Desenvolvimento'
+        );
+    } catch (error) {
+        console.error('Erro ao conectar ao MongoDB:', error);
+
+        process.exit(1);
+    }
 }
