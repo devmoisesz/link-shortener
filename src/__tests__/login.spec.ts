@@ -8,7 +8,17 @@ describe('POST /users/login', () => {
     beforeAll (async() => {
         await connectDatabase()
     })
-    it('deve retornar status code 400', async () => {
+    it('deve aprovar login, status code 200', async () =>{
+        const res = await req(app)
+            .post('/users/login')
+            .send({
+                email: "teste@gmail.com",
+                password: "202020"
+            })
+
+        expect(res.status).toBe(200)
+    })
+    it('deve bloquear login com dados invalidos, status code 400', async () => {
         const res = await req(app)
             .post('/users/login')
             .send({
