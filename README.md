@@ -102,6 +102,7 @@ link-shortener/
   <img src="https://img.shields.io/badge/MongoDB-111827?style=flat&logo=mongodb&logoColor=47A248" height="26"/>
   <img src="https://img.shields.io/badge/Mongoose-111827?style=flat&logo=mongoose&logoColor=880000" height="26"/>
   <img src="https://img.shields.io/badge/JWT-111827?style=flat&logo=jsonwebtokens&logoColor=white" height="26"/>
+  <img src="https://img.shields.io/badge/Swagger-111827?style=flat&logo=swagger&logoColor=CB3837" height="26"/>
   <img src="https://img.shields.io/badge/Zod-111827?style=flat&logo=zod&logoColor=3068B7" height="26"/>
   <img src="https://img.shields.io/badge/bcrypt-111827?style=flat&logo=letsencrypt&logoColor=white" height="26"/>
   <img src="https://img.shields.io/badge/nanoid-111827?style=flat&logo=npm&logoColor=CB3837" height="26"/>
