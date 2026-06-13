@@ -11,7 +11,7 @@ export const config = {
     url:
       env.NODE_ENV === "test"
         ? env.MONGO_URI_TEST
-        : env.MONGO_URI_DEV,
+        : env.MONGO_URI_PROD,
   },
 
   cors: {
