@@ -12,7 +12,7 @@ export async function connectDatabase(): Promise<void> {
     console.log(
       config.env === "test"
         ? "Conectado ao Banco de Testes"
-        : "Conectado ao Banco de Desenvolvimento"
+        : "Conectado ao Banco de Produção"
     );
   } catch (error) {
     console.error("Erro ao conectar ao MongoDB:", error);
