@@ -3,6 +3,7 @@
 <img src="https://img.shields.io/badge/status-production_ready-10B981?style=flat-square&logoColor=white" height="22"/>
 <img src="https://img.shields.io/badge/testes-integração_%2B_unitário-7C3AED?style=flat-square" height="22"/>
 <img src="https://img.shields.io/badge/arquitetura-layered_%2B_ESM-3B82F6?style=flat-square" height="22"/>
+<img src="https://img.shields.io/badge/docker-compose-2496ED?style=flat-square&logo=docker&logoColor=white" height="22"/>
 <img src="https://img.shields.io/badge/license-ISC-F59E0B?style=flat-square" height="22"/>
 
 <br/><br/>
@@ -29,7 +30,7 @@
 ```
 link-shortener/
 │
-├── backend  Node.js  Express  TypeScript  MongoDB/
+├── backend/  ← Node.js · Express · TypeScript · MongoDB
 │   ├── config/
 │   │   ├── env.ts              ← Validação de variáveis com Zod
 │   │   ├── index.ts            ← Exporta config tipada e segura
@@ -42,6 +43,10 @@ link-shortener/
 │   │   │   ├── redirectLink.spec.ts
 │   │   │   ├── deleteUser-Url.spec.ts
 │   │   │   └── generateShortCode.spec.ts
+│   │   │
+│   │   ├── @types/
+│   │   │   └── express/
+│   │   │       └── index.d.ts  ← Extensão do tipo Request (campo user)
 │   │   │
 │   │   ├── auth/
 │   │   │   └── auth.ts         ← Middleware JWT (extrai e valida token)
@@ -63,8 +68,15 @@ link-shortener/
 │   │   │   └── users.routes.ts
 │   │   │
 │   │   ├── middleware/
-│   │   │   ├── AppError.ts     ← Classe de erro customizada
+│   │   │   ├── AppError.ts          ← Classe de erro customizada
 │   │   │   └── error.middleware.ts  ← Handler global de erros
+│   │   │
+│   │   ├── docs/               ← Documentação Swagger/OpenAPI
+│   │   │   ├── swagger.ts
+│   │   │   ├── short-url.docs.ts
+│   │   │   ├── users.docs.ts
+│   │   │   └── components/
+│   │   │       └── schemas.docs.ts
 │   │   │
 │   │   ├── schemas/
 │   │   │   └── schema.ts       ← Schemas Zod para validação de entrada
@@ -75,19 +87,23 @@ link-shortener/
 │   │   └── utils/
 │   │       └── generate.short-code.ts  ← nanoid(6)
 │   │
-│   ├── app.ts                  ← Express app (CORS, rate limit, rotas)
-│   └── start.ts                ← Entry point (conecta DB, sobe servidor)
+│   ├── app.ts                  ← Express app (CORS, rate limit, rotas, Swagger)
+│   ├── start.ts                ← Entry point (conecta DB, sobe servidor)
+│   └── Dockerfile
 │
-└── frontend  React  TypeScript  Vite  CSS puro/
-    └── src/
-        ├── @types/             ← Tipos globais (User, ShortUrl, ApiError...)
-        ├── components/         ← Button, Input, Card, Toast, UrlItem
-        ├── context/            ← AuthContext (estado global de autenticação)
-        ├── hooks/              ← useAuth, useLocalStorage
-        ├── pages/              ← Login, Register, Dashboard
-        ├── service/            ← api.ts (interceptor + refresh), auth.ts, shortUrl.ts
-        ├── styles/             ← variables.css + global.css
-        └── utils/              ← constants.ts, validation.ts
+├── frontend/  ← React · TypeScript · Vite · CSS puro
+│   └── src/
+│       ├── @types/             ← Tipos globais (User, ShortUrl, ApiError...)
+│       ├── components/         ← Button, Input, Card, Toast, UrlItem
+│       ├── context/            ← AuthContext (estado global de autenticação)
+│       ├── hooks/              ← useAuth, useLocalStorage
+│       ├── pages/              ← Login, Register, Dashboard
+│       ├── service/            ← api.ts (interceptor + refresh), auth.ts, shortUrl.ts
+│       ├── styles/             ← variables.css + global.css
+│       └── utils/              ← constants.ts, validation.ts
+│   └── Dockerfile
+│
+└── docker-compose.yaml         ← Orquestração dos serviços backend + frontend
 ```
 
 ---
@@ -102,7 +118,7 @@ link-shortener/
   <img src="https://img.shields.io/badge/MongoDB-111827?style=flat&logo=mongodb&logoColor=47A248" height="26"/>
   <img src="https://img.shields.io/badge/Mongoose-111827?style=flat&logo=mongoose&logoColor=880000" height="26"/>
   <img src="https://img.shields.io/badge/JWT-111827?style=flat&logo=jsonwebtokens&logoColor=white" height="26"/>
-  <img src="https://img.shields.io/badge/Swagger-111827?style=flat&logo=swagger&logoColor=CB3837" height="26"/>
+  <img src="https://img.shields.io/badge/Swagger-111827?style=flat&logo=swagger&logoColor=85EA2D" height="26"/>
   <img src="https://img.shields.io/badge/Zod-111827?style=flat&logo=zod&logoColor=3068B7" height="26"/>
   <img src="https://img.shields.io/badge/bcrypt-111827?style=flat&logo=letsencrypt&logoColor=white" height="26"/>
   <img src="https://img.shields.io/badge/nanoid-111827?style=flat&logo=npm&logoColor=CB3837" height="26"/>
@@ -122,6 +138,12 @@ link-shortener/
   <img src="https://img.shields.io/badge/CSS_puro-111827?style=flat&logo=css3&logoColor=1572B6" height="26"/>
   <img src="https://img.shields.io/badge/React_Router_v7-111827?style=flat&logo=reactrouter&logoColor=CA4245" height="26"/>
   <img src="https://img.shields.io/badge/Fetch_API-111827?style=flat&logo=javascript&logoColor=F7DF1E" height="26"/>
+</div>
+
+### Infraestrutura
+<div>
+  <img src="https://img.shields.io/badge/Docker-111827?style=flat&logo=docker&logoColor=2496ED" height="26"/>
+  <img src="https://img.shields.io/badge/Docker_Compose-111827?style=flat&logo=docker&logoColor=2496ED" height="26"/>
 </div>
 
 ---
@@ -158,9 +180,9 @@ link-shortener/
 
 **Problema:** Testes de integração que escrevem no banco de desenvolvimento corrompem dados reais e tornam o ambiente imprevisível.
 
-**Decisão:** Criar duas connection strings no `.env` — `MONGO_URI_DEV` e `MONGO_URI_TEST` — e selecionar automaticamente qual usar com base na variável `NODE_ENV`.
+**Decisão:** Criar duas connection strings no `.env` — `MONGO_URI_PROD` e `MONGO_URI_TEST` — e selecionar automaticamente qual usar com base na variável `NODE_ENV`.
 
-**Resultado:** Rodar `npm test` nunca toca o banco de desenvolvimento. Trocar de ambiente é uma linha no `.env`. A separação é explícita, rastreável e auditável.
+**Resultado:** Rodar `npm test` nunca toca o banco de produção. Trocar de ambiente é uma linha no `.env`. A separação é explícita, rastreável e auditável.
 
 ---
 
@@ -192,6 +214,30 @@ const getRefreshTokenRequest = (): Promise<string | null> => {
 ```
 
 **Resultado:** Independente de quantas requisições paralelas recebam 401, apenas uma chamada ao `/refresh` é feita.
+
+---
+
+### 6. Documentação da API com Swagger/OpenAPI
+
+**Problema:** APIs sem documentação dificultam a integração por outros desenvolvedores e o próprio processo de testes manuais durante o desenvolvimento.
+
+**Decisão:** Integrar o **swagger-ui-express** com um documento OpenAPI 3.0 estruturado em módulos separados por domínio (`users.docs.ts`, `short-url.docs.ts`, `schemas.docs.ts`), montado em `swagger.ts` e exposto na rota `/docs`.
+
+**Por que modular?** Um único arquivo de documentação cresce indefinidamente conforme a API expande. A separação por domínio mantém cada arquivo coeso, facilita a revisão e evita conflitos de merge em times.
+
+**Resultado:** Documentação interativa disponível em `http://localhost:3000/docs` com exemplos de request/response, schemas reutilizáveis via `$ref` e suporte a autenticação Bearer para testar endpoints protegidos.
+
+---
+
+### 7. Containerização com Docker e Docker Compose
+
+**Problema:** O clássico "funciona na minha máquina" — diferenças de versão de Node.js, variáveis de ambiente não configuradas e dependências do sistema tornam o setup do projeto demorado e propenso a erros.
+
+**Decisão:** Criar um `Dockerfile` para cada serviço (backend e frontend) usando a imagem `node:22-alpine` para manter as imagens leves, e um `docker-compose.yaml` na raiz do projeto para orquestrar os dois serviços com uma única linha de comando.
+
+**Por que Alpine?** A imagem Alpine tem menos de 10MB, contra ~900MB da imagem Node.js padrão. Para um serviço de produção, isso reduz significativamente o tempo de build e o tamanho do artefato publicado.
+
+**Resultado:** Qualquer desenvolvedor pode rodar o projeto completo com `docker compose up --build`, sem precisar instalar Node.js, configurar variáveis globais ou resolver conflitos de versão.
 
 ---
 
@@ -262,6 +308,11 @@ npm run test:run
 | `DELETE` | `/shortener/api/:shortCode` | ✅ | Deletar URL |
 | `GET` | `/shortener/:shortCode` | ❌ | Redirecionar para URL original |
 
+### Documentação
+| Rota | Descrição |
+|---|---|
+| `GET /docs` | Interface Swagger UI com todos os endpoints documentados |
+
 ---
 
 ## 🖥️ Interface da Aplicação
@@ -285,14 +336,57 @@ Header fixo, área de encurtamento com resultado animado, histórico com pagina�
 
 ## 🚀 Como Executar
 
-### Pré-requisitos
+### Opção 1 — Docker Compose (recomendado)
+
+> Pré-requisitos: [Docker](https://docs.docker.com/get-docker/) e [Docker Compose](https://docs.docker.com/compose/install/) instalados.
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/devmoisesz/link-shortener.git
+cd link-shortener
+
+# 2. Configure as variáveis de ambiente do backend
+cp backend/.env.example backend/.env
+# Edite backend/.env com suas credenciais MongoDB e JWT secrets
+
+# 3. Configure as variáveis de ambiente do frontend
+cp frontend/.env.example frontend/.env
+# Edite frontend/.env se necessário (o padrão aponta para localhost:3000)
+
+# 4. Suba os serviços
+docker compose up --build
+
+# Backend → http://localhost:3000
+# Frontend → http://localhost:5173
+# Swagger  → http://localhost:3000/docs
+```
+
+Para rodar em background:
+
+```bash
+docker compose up --build -d
+
+# Acompanhar logs
+docker compose logs -f
+
+# Parar os serviços
+docker compose down
+```
+
+---
+
+### Opção 2 — Execução local (sem Docker)
+
+#### Pré-requisitos
 - Node.js 20+
 - MongoDB local ou Atlas
 - npm
 
-### Backend
+#### Backend
 
 ```bash
+cd backend
+
 # Instalar dependências
 npm install
 
@@ -306,9 +400,10 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 # Iniciar em desenvolvimento
 npm run dev
 # → http://localhost:3000
+# → Swagger: http://localhost:3000/docs
 ```
 
-### Frontend
+#### Frontend
 
 ```bash
 cd frontend
@@ -328,11 +423,11 @@ npm run dev
 ### Backend (`.env`)
 
 ```env
-# Ambiente: 'development' ou 'test'
-NODE_ENV=development
+# Ambiente: 'production' ou 'test'
+NODE_ENV=production
 
 # Bancos separados por ambiente
-MONGO_URI_DEV=mongodb+srv://user:password@cluster.mongodb.net/linkshortener_dev
+MONGO_URI_PROD=mongodb+srv://user:password@cluster.mongodb.net/linkshortener_prod
 MONGO_URI_TEST=mongodb+srv://user:password@cluster.mongodb.net/linkshortener_test
 
 # Servidor
@@ -349,10 +444,11 @@ JWT_REFRESH_SECRET=seu_secret_refresh_token_aqui
 TOKEN_TESTING=token_gerado_no_login_para_uso_nos_testes
 ```
 
-### Frontend (`.env.local`)
+### Frontend (`.env`)
 
 ```env
 VITE_API_URL=http://localhost:3000
+VITE_FRONTEND_URL=http://localhost:5173
 ```
 
 > ⚠️ Nunca commite `.env`. Use `.env.example` para compartilhar a estrutura.
@@ -368,14 +464,16 @@ VITE_API_URL=http://localhost:3000
 | **Performance** | Auto-refresh deduplicado, paginação, índices MongoDB nos campos críticos |
 | **Manutenibilidade** | Arquitetura em camadas, TypeScript strict, error handling centralizado |
 | **Testabilidade** | Banco de testes separado, Vitest + Supertest, testes de integração reais |
+| **Documentação** | Swagger UI com OpenAPI 3.0, organizado por domínio com schemas reutilizáveis |
+| **Portabilidade** | Docker + Docker Compose para execução reproduzível em qualquer ambiente |
 
 ---
 
 ## 👨‍💻 Sobre o Desenvolvedor
 
-Projeto desenvolvido por **Moisés**, estudante de Desenvolvimento de Sistemas na ETEC DANS e aspirante a Backend Engineer.
+Projeto desenvolvido por **Moisés**, estudante de Desenvolvimento de Sistemas no SENAI CIMATEC e aspirante a Backend Engineer.
 
-Este projeto foi construído com o objetivo de consolidar na prática conhecimentos de arquitetura backend, segurança em APIs REST, testes automatizados e integração full-stack — cada funcionalidade e cada decisão técnica foi pensada, implementada e documentada intencionalmente.
+Este projeto foi construído com o objetivo de consolidar na prática conhecimentos de arquitetura backend, segurança em APIs REST, testes automatizados, documentação de API e integração full-stack — cada funcionalidade e cada decisão técnica foi pensada, implementada e documentada intencionalmente.
 
 <div>
   <a href="https://github.com/devmoisesz">
@@ -386,6 +484,11 @@ Este projeto foi construído com o objetivo de consolidar na prática conhecimen
   </a>
 </div>
 
+---
+
+<div align="center">
+  <sub>Construído com foco em aprendizado real, decisões técnicas justificadas e código que pode ir para produção.</sub>
+</div>
 ---
 
 <div align="center">
