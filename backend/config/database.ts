@@ -1,6 +1,5 @@
 import dns from 'node:dns';
 import mongoose from 'mongoose';
-import 'dotenv/config';
 import { config } from './index';
 
 dns.setServers(['8.8.8.8', '8.8.4.4']);
