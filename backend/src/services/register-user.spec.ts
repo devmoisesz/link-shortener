@@ -33,7 +33,7 @@ describe('Register Use Case', () => {
 
         const isPasswordCorrectlyHashed = await bcrypt.compare(
             '123456',
-            user.hashedPassword
+            user.password
         )
 
         expect(isPasswordCorrectlyHashed).toBe(true)

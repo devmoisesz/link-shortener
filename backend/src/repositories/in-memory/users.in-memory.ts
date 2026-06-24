@@ -4,19 +4,19 @@ import { UsersRepository } from "../users.repository"
 interface User {
     name: string,
     email: string,
-    hashedPassword: string
+    password: string
 }
 
 export class InMemoryUsersRepository implements UsersRepository{
     public items: User[] = []
 
 
-    async create({name, email, hashedPassword}: User){
+    async create({name, email, password}: User){
         const user = {
             id: randomUUID(),
             name,
             email, 
-            hashedPassword,
+            password,
             created_at: new Date()
         }
 

@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 import { AppError } from "../middleware/AppError";
-import { MongooseUsersRepository } from '../repositories/mongoose/users-mongoose.repository';
 import { UsersRepository } from '../repositories/users.repository';
 
 interface LoginServiceRequest {
@@ -15,8 +14,8 @@ export class LoginService {
         const user = await this.usersRepository.findByEmail(email)
 
         if(!user) throw new AppError('E-mail ou senha incorretos.', 400)
-            
-        const validPassoword = await bcrypt.compare(password, user.hashedPassword)
+
+        const validPassoword = await bcrypt.compare(password, user.password)
 
         if(!validPassoword) throw new AppError('E-mail ou senha incorretos.', 400)
         

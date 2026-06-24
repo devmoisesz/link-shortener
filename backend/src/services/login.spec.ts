@@ -9,7 +9,7 @@ let usersRepository: InMemoryUsersRepository
 let loginService: LoginService
 let registerUserService: RegisterUserService
 
-describe('Register Use Case', () => {
+describe('Login Service', () => {
     beforeEach(async() => {
         usersRepository = new InMemoryUsersRepository()
         loginService = new LoginService(usersRepository)
@@ -45,7 +45,7 @@ describe('Register Use Case', () => {
         await usersRepository.create({
             name: 'John Doe',
             email: 'johndoe@example.com',
-            hashedPassword: await bcrypt.hash('123456', 10)
+            password: await bcrypt.hash('123456', 10)
         })
 
         await expect(() =>

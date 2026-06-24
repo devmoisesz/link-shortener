@@ -26,16 +26,16 @@ const UserSchema = model('User', userSchema);
 export interface CreateUserRequest {
     name: string
     email: string
-    hashedPassword: string
+    password: string
 }
 
 export class MongooseUsersRepository implements UsersRepository {
     
-    async create({name, email, hashedPassword}: CreateUserRequest) {
+    async create({name, email, password}: CreateUserRequest) {
         return await UserSchema.create({
             name, 
             email,
-            password: hashedPassword
+            password,
         });
     }
 
