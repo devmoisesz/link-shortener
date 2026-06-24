@@ -217,7 +217,7 @@ const getRefreshTokenRequest = (): Promise<string | null> => {
 
 ---
 
-### 6. Documentação da API com Swagger/OpenAPI
+### 6. Documentação da API com Swagger
 
 **Problema:** APIs sem documentação dificultam a integração por outros desenvolvedores e o próprio processo de testes manuais durante o desenvolvimento.
 
