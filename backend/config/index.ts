@@ -22,8 +22,4 @@ export const config = {
     secret: env.JWT_SECRET,
     refreshSecret: env.JWT_REFRESH_SECRET,
   },
-
-  test: {
-    token: env.TOKEN_TESTING,
-  },
 };

@@ -13,7 +13,6 @@ const envSchema = z.object({
     JWT_SECRET: z.string().min(10),
     JWT_REFRESH_SECRET: z.string().min(10),
 
-    TOKEN_TESTING: z.string()
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
