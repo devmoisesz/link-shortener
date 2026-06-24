@@ -91,7 +91,7 @@ link-shortener/
 │   ├── start.ts                ← Entry point (conecta DB, sobe servidor)
 │   └── Dockerfile
 │
-├── frontend/  ← React · TypeScript · Vite · CSS puro
+├── frontend/  ← React · TypeScript · Vite · CSS
 │   └── src/
 │       ├── @types/             ← Tipos globais (User, ShortUrl, ApiError...)
 │       ├── components/         ← Button, Input, Card, Toast, UrlItem
