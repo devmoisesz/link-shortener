@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
-    "test:unit": "vitest run",
+    "test": "vitest run --project unit",
+    "test:e2e": "vitest run --project e2e",
     "dev": "tsx watch start.ts"
   },
   "keywords": [],
