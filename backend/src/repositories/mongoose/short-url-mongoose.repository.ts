@@ -22,7 +22,7 @@ const shortUrlSchema = new Schema({
     }
 });
 
-const ShortUrlSchema = model('ShortUrl', shortUrlSchema);
+export const ShortUrlModel = model('ShortUrl', shortUrlSchema);
 
 export interface CreateShortUrlRequest {
     shortCode: string, 
@@ -33,7 +33,7 @@ export interface CreateShortUrlRequest {
 export class MongooseShortUrlRepository implements ShortUrlRepository {
 
     async create({shortCode, userId, longUrl}: CreateShortUrlRequest){
-        return await ShortUrlSchema.create({
+        return await ShortUrlModel.create({
             shortCode,
             userId,
             longUrl
@@ -41,19 +41,19 @@ export class MongooseShortUrlRepository implements ShortUrlRepository {
     }
 
     async findByLongUrl(longUrl: string){
-        return await ShortUrlSchema.findOne({
+        return await ShortUrlModel.findOne({
             longUrl
         })
     }
 
     async exists(shortCode: string) {
-        return await ShortUrlSchema.exists({
+        return await ShortUrlModel.exists({
             shortCode
         });
     }
 
     async findByShortCode(shortCode: string) {
-        return await ShortUrlSchema.findOne({
+        return await ShortUrlModel.findOne({
             shortCode
         });
     }
@@ -65,18 +65,18 @@ export class MongooseShortUrlRepository implements ShortUrlRepository {
     ) {
         const skip = (page - 1) * limit;
 
-        return await ShortUrlSchema.find({ userId })
+        return await ShortUrlModel.find({ userId })
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
     }
 
     async countByUserId(userId: string) {
-        return await ShortUrlSchema.countDocuments({ userId });
+        return await ShortUrlModel.countDocuments({ userId });
     }
 
     async deleteByShortCode(shortCode: string) {
-        const result = await ShortUrlSchema.deleteOne({ shortCode });
+        const result = await ShortUrlModel.deleteOne({ shortCode });
 
         return result.deletedCount > 0;
     }

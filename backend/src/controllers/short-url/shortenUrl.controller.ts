@@ -15,7 +15,7 @@ export async function shortenUrl(req: Request, res: Response, next: NextFunction
 
         return res.status(201).json({
             userId: shortUrl.userId,
-            schortCode: shortUrl.shortCode,
+            shortCode: shortUrl.shortCode,
             shortUrl: `${baseUrl}/${shortUrl.shortCode}`
         });
     } catch (error: unknown) {

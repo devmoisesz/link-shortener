@@ -21,7 +21,7 @@ const userSchema = new Schema({
     }
 );
 
-const UserSchema = model('User', userSchema);
+export const UserModel = model('User', userSchema);
 
 export interface CreateUserRequest {
     name: string
@@ -32,7 +32,7 @@ export interface CreateUserRequest {
 export class MongooseUsersRepository implements UsersRepository {
     
     async create({name, email, password}: CreateUserRequest) {
-        return await UserSchema.create({
+        return await UserModel.create({
             name, 
             email,
             password,
@@ -40,7 +40,7 @@ export class MongooseUsersRepository implements UsersRepository {
     }
 
     async findByEmail(email: string) {
-        return await UserSchema.findOne({
+        return await UserModel.findOne({
             email
         })
     }
