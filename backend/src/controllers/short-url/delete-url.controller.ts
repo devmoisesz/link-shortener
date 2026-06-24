@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { DeleteUrlService } from "../../services/delete-url";
 import { makeDeleteUrl } from "../../services/factories/make-delete-url";
 
 const deleteUrlService = makeDeleteUrl()

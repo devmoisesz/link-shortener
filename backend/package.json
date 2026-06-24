@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run --project unit",
-    "test:e2e": "vitest run --project e2e",
+    "test:e2e": "vitest run --project e2e --maxWorkers=1",
     "dev": "tsx watch start.ts"
   },
   "keywords": [],
