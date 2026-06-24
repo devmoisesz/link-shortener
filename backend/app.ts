@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import cookieParser from 'cookie-parser'
 import cors from 'cors';
 import shortUrlRoutes from './src/routes/short-url.routes'
 import usersRoutes from './src/routes/users.routes'
@@ -16,6 +17,8 @@ const limiter = rateLimit({
 });
 
 const app = express();
+
+app.use(cookieParser())
 
 app.use(cors({
   origin: config.cors.origin,

@@ -1,8 +1,11 @@
 import express from 'express';
 import { validate } from '../validators/validator';
 import { urlSchema } from '../schemas/schema';
-import controller from "../controllers/short-url.controller";
 import authentication from '../auth/auth';
+import { shortenUrl } from '../controllers/short-url/shortenUrl.controller';
+import { redirectLink } from '../controllers/short-url/redirect-link.controller';
+import { getUserUrls } from '../controllers/short-url/get-user-urls.controller';
+import { deleteUrl } from '../controllers/short-url/delete-url.controller';
 
 const router = express.Router();
 
@@ -10,24 +13,24 @@ router.post(
     '/api/shorten', 
     authentication,
     validate(urlSchema),
-    controller.shortenUrl
+    shortenUrl
 );
 
 router.get(
     '/:shortCode',
-    controller.redirectLink
+    redirectLink
 )
 
 router.get(
     '/api/urls',
     authentication,
-    controller.getUserUrls
+    getUserUrls
 )
 
 router.delete(
     `/api/:shortCode`,
     authentication,
-    controller.DeleteUrl
+    deleteUrl
 )
 
 export default router;
