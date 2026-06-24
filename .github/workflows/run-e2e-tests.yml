@@ -19,8 +19,12 @@ jobs:
             - run: npm ci
               working-directory: backend
 
-            - run: npm run test:e2e -- --maxWorkers=1
+            - run: npm run test:e2e
               working-directory: backend
               env:
-                MONGODB_URI: ${{ secrets.MONGODB_TEST_URI }}
+                MONGO_URI_TEST: ${{ secrets.MONGO_URI_TEST }}
+                MONGO_URI_PROD: ${{ secrets.MONGO_URI_PROD }}
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
+                JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
+                FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+                NODE_ENV: ${{ secrets.NODE_ENV }}

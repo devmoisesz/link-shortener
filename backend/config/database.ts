@@ -6,7 +6,10 @@ dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 export async function connectDatabase(): Promise<void> {
   try {
-    await mongoose.connect(config.db.url);
+    await mongoose.connect(config.db.url, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+    });
 
     console.log(
       config.env === "test"
